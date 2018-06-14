@@ -1,22 +1,24 @@
 <?php
+/**
+ * This file is part of Swoft.
+ *
+ * @link https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact group@swoft.org
+ * @license https://github.com/swoft-cloud/swoft/blob/master/LICENSE
+ */
 
 namespace App\Controllers;
 
-use Swoft\Bean\Annotation\Controller;
-use Swoft\Bean\Annotation\RequestMapping;
-use Swoft\Web\Request;
-use Swoft\Web\Response;
+use Swoft\Http\Server\Bean\Annotation\Controller;
+use Swoft\Http\Server\Bean\Annotation\RequestMapping;
+use Swoft\Http\Message\Server\Request;
+use Swoft\Http\Message\Server\Response;
 
 /**
  * action demo
  *
  * @Controller(prefix="/route")
- *
- * @uses      TestController
- * @version   2017年11月26日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
 class RouteController
 {
@@ -29,18 +31,35 @@ class RouteController
     }
 
     /**
+     * access /routes you can see all registered routes.
+     * @RequestMapping("/routes")
+     */
+    public function routes(): array
+    {
+        /** @var \Swoft\Http\Server\Router\HandlerMapping $router */
+        $router = \bean('httpRouter');
+
+        return [
+            'static' => $router->getStaticRoutes(),
+            'regular' => $router->getRegularRoutes(),
+            'vague' => $router->getVagueRoutes(),
+            'cached' => $router->getCacheRoutes(),
+        ];
+    }
+    
+    /**
      * @RequestMapping(route="user/{uid}/book/{bid}/{bool}/{name}")
      *
      * @param bool                $bool
-     * @param \Swoft\Web\Request  $request
+     * @param Request  $request
      * @param int                 $bid
      * @param string              $name
      * @param int                 $uid
-     * @param \Swoft\Web\Response $response
+     * @param Response $response
      *
      * @return array
      */
-    public function actionFuncArgs(bool $bool, Request $request, int $bid, string $name, int $uid, Response $response)
+    public function funcArgs(bool $bool, Request $request, int $bid, string $name, int $uid, Response $response)
     {
         return [$bid, $uid, $bool, $name, get_class($request), get_class($response)];
     }
@@ -50,19 +69,19 @@ class RouteController
      *
      * @return string
      */
-    public function actionHasNotArgs()
+    public function hasNotArgs()
     {
         return 'hasNotArg';
     }
 
     /**
      * @RequestMapping(route="hasAnyArgs/{bid}")
-     * @param \Swoft\Web\Request $request
+     * @param Request $request
      * @param int                $bid
      *
      * @return string
      */
-    public function actionHasAnyArgs(Request $request, int $bid)
+    public function hasAnyArgs(Request $request, int $bid)
     {
         return [get_class($request), $bid];
     }
@@ -70,12 +89,12 @@ class RouteController
     /**
      * @RequestMapping(route="hasMoreArgs")
      *
-     * @param \Swoft\Web\Request $request
+     * @param Request $request
      * @param int                $bid
      *
      * @return array
      */
-    public function actionHasMoreArgs(Request $request, int $bid)
+    public function hasMoreArgs(Request $request, int $bid)
     {
         return [get_class($request), $bid];
     }
@@ -88,7 +107,7 @@ class RouteController
      * @param string $name
      * @return array
      */
-    public function actionOptionalParameter(string $name)
+    public function optionalParameter(string $name)
     {
         return[$name];
     }
@@ -107,17 +126,17 @@ class RouteController
     }
 
     /**
-     * @param \Swoft\Web\Request $request
+     * @param Request $request
      *
      * @return array
      */
-    public function actionNotAnnotation(Request $request)
+    public function notAnnotation(Request $request)
     {
         return [get_class($request)];
     }
 
     /**
-     * @param \Swoft\Web\Request $request
+     * @param Request $request
      *
      * @return array
      */
@@ -127,11 +146,11 @@ class RouteController
     }
 
     /**
-     * @param \Swoft\Web\Request $request
+     * @param Request $request
      *
      * @return array
      */
-    public function BehindAction(Request $request)
+    public function behind(Request $request)
     {
         return [get_class($request)];
     }

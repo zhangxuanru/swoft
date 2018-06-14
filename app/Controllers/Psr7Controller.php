@@ -1,30 +1,32 @@
 <?php
+/**
+ * This file is part of Swoft.
+ *
+ * @link https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact group@swoft.org
+ * @license https://github.com/swoft-cloud/swoft/blob/master/LICENSE
+ */
 
 namespace App\Controllers;
 
 use Psr\Http\Message\UploadedFileInterface;
-use Swoft\Bean\Annotation\Controller;
-use Swoft\Bean\Annotation\RequestMapping;
-use Swoft\Web\Request;
+use Swoft\Http\Message\Server\Request;
+use Swoft\Http\Server\Bean\Annotation\Controller;
+use Swoft\Http\Server\Bean\Annotation\RequestMapping;
 
 /**
  * @Controller(prefix="/psr7")
- * @uses      Psr7Controller
- * @version   2017-11-05
- * @author    huangzhhui <huangzhwork@gmail.com>
- * @copyright Copyright 2010-2017 Swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
 class Psr7Controller
 {
 
     /**
      * @RequestMapping()
-     * @param \Swoft\Web\Request $request
-     *
+     * @param \Swoft\Http\Message\Server\Request $request
      * @return array
      */
-    public function actionGet(Request $request)
+    public function get(Request $request): array
     {
         $param1 = $request->query('param1');
         $param2 = $request->query('param2', 'defaultValue');
@@ -33,12 +35,10 @@ class Psr7Controller
 
     /**
      * @RequestMapping()
-     *
-     * @param \Swoft\Web\Request $request
-     *
+     * @param \Swoft\Http\Message\Server\Request $request
      * @return array
      */
-    public function actionPost(Request $request)
+    public function post(Request $request): array
     {
         $param1 = $request->post('param1');
         $param2 = $request->post('param2');
@@ -47,12 +47,10 @@ class Psr7Controller
 
     /**
      * @RequestMapping()
-     *
-     * @param \Swoft\Web\Request $request
-     *
+     * @param \Swoft\Http\Message\Server\Request $request
      * @return array
      */
-    public function actionInput(Request $request)
+    public function input(Request $request): array
     {
         $param1 = $request->input('param1');
         $inputs = $request->input();
@@ -65,11 +63,10 @@ class Psr7Controller
 
     /**
      * @RequestMapping()
-     * @param \Swoft\Web\Request $request
-     *
+     * @param \Swoft\Http\Message\Server\Request $request
      * @return array
      */
-    public function actionRaw(Request $request)
+    public function raw(Request $request): array
     {
         $param1 = $request->raw();
         return compact('param1');
@@ -77,11 +74,10 @@ class Psr7Controller
 
     /**
      * @RequestMapping()
-     * @param \Swoft\Web\Request $request
-     *
+     * @param \Swoft\Http\Message\Server\Request $request
      * @return array
      */
-    public function actionCookies(Request $request)
+    public function cookies(Request $request): array
     {
         $cookie1 = $request->cookie();
         return compact('cookie1');
@@ -89,12 +85,10 @@ class Psr7Controller
 
     /**
      * @RequestMapping()
-     *
-     * @param \Swoft\Web\Request $request
-     *
+     * @param \Swoft\Http\Message\Server\Request $request
      * @return array
      */
-    public function actionHeader(Request $request)
+    public function header(Request $request): array
     {
         $header1 = $request->header();
         $host = $request->header('host');
@@ -103,11 +97,10 @@ class Psr7Controller
 
     /**
      * @RequestMapping()
-     * @param \Swoft\Web\Request $request
-     *
+     * @param \Swoft\Http\Message\Server\Request $request
      * @return array
      */
-    public function actionJson(Request $request)
+    public function json(Request $request): array
     {
         $json = $request->json();
         $jsonParam = $request->json('jsonParam');
@@ -116,20 +109,41 @@ class Psr7Controller
 
     /**
      * @RequestMapping()
-     * @param \Swoft\Web\Request $request
-     *
+     * @param \Swoft\Http\Message\Server\Request $request
      * @return array
      */
-    public function actionFiles(Request $request)
+    public function files(Request $request): array
     {
         $files = $request->file();
         foreach ($files as $file) {
             if ($file instanceof UploadedFileInterface) {
                 try {
-                    $file->moveTo('@runtime/uploadfiles/1.png');
+                    $file->moveTo('@runtime/uploadfiles/' . $file->getClientFilename());
                     $move = true;
                 } catch (\Throwable $e) {
                     $move = false;
+                }
+            }
+        }
+
+        return compact('move');
+    }
+
+    /**
+     * @RequestMapping()
+     * @param \Swoft\Http\Message\Server\Request $request
+     * @return array|null|\Swoft\Http\Message\Upload\UploadedFile
+     */
+    public function multiFilesInOneKey(Request $request)
+    {
+        $files = $request->file('files');
+        foreach ($files as $file) {
+            if ($file instanceof UploadedFileInterface) {
+                try {
+                    $file->moveTo('@runtime/uploadfiles/' . $file->getClientFilename());
+                    $move[$file->getClientFilename()] = true;
+                } catch (\Throwable $e) {
+                    $move[$file->getClientFilename()] = false;
                 }
             }
         }

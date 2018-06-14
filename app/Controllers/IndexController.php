@@ -1,35 +1,42 @@
 <?php
+/**
+ * This file is part of Swoft.
+ *
+ * @link https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact group@swoft.org
+ * @license https://github.com/swoft-cloud/swoft/blob/master/LICENSE
+ */
 
 namespace App\Controllers;
 
-use Swoft\Bean\Annotation\Controller;
-use Swoft\Bean\Annotation\RequestMapping;
-use Swoft\Bean\Annotation\View;
+use Swoft\App;
+use Swoft\Http\Server\Bean\Annotation\Controller;
+use Swoft\Http\Server\Bean\Annotation\RequestMapping;
+use Swoft\Log\Log;
+use Swoft\View\Bean\Annotation\View;
 use Swoft\Contract\Arrayable;
-use Swoft\Exception\Http\BadRequestException;
-use Swoft\Web\Response;
+use Swoft\Http\Server\Exception\BadRequestException;
+use Swoft\Http\Message\Server\Response;
 
 /**
  * Class IndexController
  * @Controller()
- *
- * @package App\Controllers
  */
 class IndexController
 {
 
     /**
-     * @RequestMapping()
-     *
+     * @RequestMapping("/")
      * @View(template="index/index")
      * @return array
      */
-    public function actionIndex()
+    public function index(): array
     {
         $name = 'Swoft';
         $notes = [
             'New Generation of PHP Framework',
-            'Hign Performance, Coroutine and Full Stack'
+            'High Performance, Coroutine and Full Stack'
         ];
         $links = [
             [
@@ -58,13 +65,50 @@ class IndexController
     }
 
     /**
+     * show view by view function
+     */
+    public function templateView(): Response
+    {
+        $name = 'Swoft View';
+        $notes = [
+            'New Generation of PHP Framework',
+            'High Performance, Coroutine and Full Stack'
+        ];
+        $links = [
+            [
+                'name' => 'Home',
+                'link' => 'http://www.swoft.org',
+            ],
+            [
+                'name' => 'Documentation',
+                'link' => 'http://doc.swoft.org',
+            ],
+            [
+                'name' => 'Case',
+                'link' => 'http://swoft.org/case',
+            ],
+            [
+                'name' => 'Issue',
+                'link' => 'https://github.com/swoft-cloud/swoft/issues',
+            ],
+            [
+                'name' => 'GitHub',
+                'link' => 'https://github.com/swoft-cloud/swoft',
+            ],
+        ];
+        $data = compact('name', 'notes', 'links');
+
+        return view('index/index', $data);
+    }
+
+    /**
      * @RequestMapping()
      * @View(template="index/index")
      * @return \Swoft\Contract\Arrayable|__anonymous@836
      */
-    public function actionArrayable()
+    public function arrayable(): Arrayable
     {
-        return (new class implements Arrayable
+        return new class implements Arrayable
         {
             /**
              * @return array
@@ -72,8 +116,8 @@ class IndexController
             public function toArray(): array
             {
                 return [
-                    'name' => 'Swoft',
-                    'notes' => ['New Generation of PHP Framework', 'Hign Performance, Coroutine and Full Stack'],
+                    'name'  => 'Swoft',
+                    'notes' => ['New Generation of PHP Framework', 'High Performance, Coroutine and Full Stack'],
                     'links' => [
                         [
                             'name' => 'Home',
@@ -99,37 +143,80 @@ class IndexController
                 ];
             }
 
-        });
+        };
+    }
+
+    /**
+     * @RequestMapping()
+     * @return Response
+     */
+    public function absolutePath(): Response
+    {
+        $data = [
+            'name'  => 'Swoft',
+            'notes' => ['New Generation of PHP Framework', 'High Performance, Coroutine and Full Stack'],
+            'links' => [
+                [
+                    'name' => 'Home',
+                    'link' => 'http://www.swoft.org',
+                ],
+                [
+                    'name' => 'Documentation',
+                    'link' => 'http://doc.swoft.org',
+                ],
+                [
+                    'name' => 'Case',
+                    'link' => 'http://swoft.org/case',
+                ],
+                [
+                    'name' => 'Issue',
+                    'link' => 'https://github.com/swoft-cloud/swoft/issues',
+                ],
+                [
+                    'name' => 'GitHub',
+                    'link' => 'https://github.com/swoft-cloud/swoft',
+                ],
+            ]
+        ];
+        $template = 'index/index';
+        return view($template, $data);
     }
 
     /**
      * @RequestMapping()
      * @return string
      */
-    public function actionRaw()
+    public function raw()
     {
         $name = 'Swoft';
         return $name;
     }
 
-    /**
-     * @RequestMapping()
-     */
-    public function actionException()
+    public function testLog()
     {
-        throw new BadRequestException();
+        App::trace('this is app trace');
+        Log::trace('this is log trace');
+        App::error('this is log error');
+        Log::trace('this is log error');
+        return ['log'];
     }
 
     /**
      * @RequestMapping()
-     *
-     * @param \Swoft\Web\Response $response
-     *
-     * @return \Swoft\Base\Response
+     * @throws \Swoft\Http\Server\Exception\BadRequestException
      */
-    public function actionRedirect(Response $response)
+    public function exception()
+    {
+        throw new BadRequestException('bad request exception');
+    }
+
+    /**
+     * @RequestMapping()
+     * @param Response $response
+     * @return Response
+     */
+    public function redirect(Response $response): Response
     {
         return $response->redirect('/');
     }
-
 }

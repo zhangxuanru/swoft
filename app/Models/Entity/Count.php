@@ -1,11 +1,19 @@
 <?php
+/**
+ * This file is part of Swoft.
+ *
+ * @link https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact group@swoft.org
+ * @license https://github.com/swoft-cloud/swoft/blob/master/LICENSE
+ */
 
 namespace App\Models\Entity;
 
-use Swoft\Bean\Annotation\Column;
-use Swoft\Bean\Annotation\Entity;
-use Swoft\Bean\Annotation\Id;
-use Swoft\Bean\Annotation\Table;
+use Swoft\Db\Bean\Annotation\Column;
+use Swoft\Db\Bean\Annotation\Entity;
+use Swoft\Db\Bean\Annotation\Id;
+use Swoft\Db\Bean\Annotation\Table;
 use Swoft\Db\Model;
 use Swoft\Db\Types;
 

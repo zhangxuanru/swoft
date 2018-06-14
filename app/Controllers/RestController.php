@@ -1,23 +1,24 @@
 <?php
+/**
+ * This file is part of Swoft.
+ *
+ * @link https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact group@swoft.org
+ * @license https://github.com/swoft-cloud/swoft/blob/master/LICENSE
+ */
 
 namespace App\Controllers;
 
-use Swoft\Bean\Annotation\Ary;
-use Swoft\Bean\Annotation\Controller;
-use Swoft\Bean\Annotation\RequestMapping;
-use Swoft\Bean\Annotation\RequestMethod;
-use Swoft\Web\Request;
+use Swoft\Http\Server\Bean\Annotation\Controller;
+use Swoft\Http\Server\Bean\Annotation\RequestMapping;
+use Swoft\Http\Server\Bean\Annotation\RequestMethod;
+use Swoft\Http\Message\Server\Request;
 
 /**
- * restful和参数验证测试demo
+ * RESTful和参数验证测试demo
  *
  * @Controller(prefix="/user")
- *
- * @uses      RestController
- * @version   2017年11月13日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
 class RestController
 {
@@ -27,7 +28,7 @@ class RestController
      *
      * @RequestMapping(route="/user", method={RequestMethod::GET})
      */
-    public function actionList()
+    public function list()
     {
         return ['list'];
     }
@@ -39,16 +40,16 @@ class RestController
      *
      * @RequestMapping(route="/user", method={RequestMethod::POST,RequestMethod::PUT})
      *
-     * @param \Swoft\Web\Request $request
+     * @param Request $request
      *
      * @return array
      */
-    public function actionCreate(Request $request)
+    public function create(Request $request)
     {
         $name = $request->input('name');
 
         $bodyParams = $request->getBodyParams();
-        $bodyParams = empty($bodyParams) ? ["create", $name] : $bodyParams;
+        $bodyParams = empty($bodyParams) ? ['create', $name] : $bodyParams;
 
         return $bodyParams;
     }
@@ -63,7 +64,7 @@ class RestController
      *
      * @return array
      */
-    public function actionGetUser(int $uid)
+    public function getUser(int $uid)
     {
         return ['getUser', $uid];
     }
@@ -79,7 +80,7 @@ class RestController
      *
      * @return array
      */
-    public function actionGetBookFromUser(int $userId, string $bookId)
+    public function getBookFromUser(int $userId, string $bookId)
     {
         return ['bookFromUser', $userId, $bookId];
     }
@@ -94,7 +95,7 @@ class RestController
      *
      * @return array
      */
-    public function actionDeleteUser(int $uid)
+    public function deleteUser(int $uid)
     {
         return ['delete', $uid];
     }
@@ -109,7 +110,7 @@ class RestController
      * @param Request $request
      * @return array
      */
-    public function actionUpdateUser(Request $request, int $uid)
+    public function updateUser(Request $request, int $uid)
     {
         $body = $request->getBodyParams();
         $body['update'] = 'update';

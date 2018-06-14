@@ -1,26 +1,27 @@
 <?php
+/**
+ * This file is part of Swoft.
+ *
+ * @link https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact group@swoft.org
+ * @license https://github.com/swoft-cloud/swoft/blob/master/LICENSE
+ */
 
 namespace App\Controllers;
 
-use Swoft\Bean\Annotation\Controller;
+use Swoft\Http\Server\Bean\Annotation\Controller;
 use Swoft\Bean\Annotation\Enum;
 use Swoft\Bean\Annotation\Floats;
 use Swoft\Bean\Annotation\Integer;
 use Swoft\Bean\Annotation\Number;
-use Swoft\Bean\Annotation\RequestMapping;
+use Swoft\Http\Server\Bean\Annotation\RequestMapping;
 use Swoft\Bean\Annotation\Strings;
 use Swoft\Bean\Annotation\ValidatorFrom;
-use Swoft\Web\Request;
+use Swoft\Http\Message\Server\Request;
 
 /**
- * validator
- *
  * @Controller("validator")
- * @uses      ValidatorController
- * @version   2017年12月02日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
 class ValidatorController
 {
@@ -45,14 +46,24 @@ class ValidatorController
     }
 
     /**
+     * @RequestMapping("stringTpl")
+     * @Strings(from=ValidatorFrom::GET, name="name", min=3, max=10, template="{name}-{min}-{max} must")
+     * @return string
+     */
+    public function stringTpl()
+    {
+        return 'stringTpl';
+    }
+
+    /**
      * @RequestMapping("number/{id}")
      *
      * @Number(from=ValidatorFrom::GET, name="id", min=5, max=10, default=7)
      * @Number(from=ValidatorFrom::POST, name="id", min=5, max=10, default=8)
      * @Number(from=ValidatorFrom::PATH, name="id", min=5, max=10)
      *
-     * @param \Swoft\Web\Request $request
-     * @param int                $id
+     * @param Request $request
+     * @param int     $id
      *
      * @return array
      */
@@ -65,14 +76,24 @@ class ValidatorController
     }
 
     /**
+     * @RequestMapping("numberTpl")
+     * @Number(from=ValidatorFrom::GET, name="id", min=5, max=10, template="{name}-{min}-{max} must")
+     * @return string
+     */
+    public function numberTpl()
+    {
+        return 'numberTpl';
+    }
+
+    /**
      * @RequestMapping("integer/{id}")
      *
      * @Integer(from=ValidatorFrom::GET, name="id", min=5, max=10, default=7)
      * @Integer(from=ValidatorFrom::POST, name="id", min=5, max=10, default=8)
      * @Integer(from=ValidatorFrom::PATH, name="id", min=5, max=10)
      *
-     * @param \Swoft\Web\Request $request
-     * @param int                $id
+     * @param Request $request
+     * @param int     $id
      *
      * @return array
      */
@@ -85,14 +106,24 @@ class ValidatorController
     }
 
     /**
+     * @RequestMapping("integerTpl")
+     * @Integer(from=ValidatorFrom::GET, name="id", min=5, max=10, template="{name}-{min}-{max} must")
+     * @return string
+     */
+    public function integerTpl()
+    {
+        return 'integerTpl';
+    }
+
+    /**
      * @RequestMapping("float/{id}")
      *
      * @Floats(from=ValidatorFrom::GET, name="id", min=5.1, max=5.9, default=5.6)
      * @Floats(from=ValidatorFrom::POST, name="id", min=5.1, max=5.9, default=5.6)
      * @Floats(from=ValidatorFrom::PATH, name="id", min=5.1, max=5.9)
      *
-     * @param \Swoft\Web\Request $request
-     * @param float              $id
+     * @param Request $request
+     * @param float   $id
      *
      * @return array
      */
@@ -102,6 +133,16 @@ class ValidatorController
         $post = $request->post('id');
 
         return [$get, $post, $id];
+    }
+
+    /**
+     * @RequestMapping("floatTpl")
+     * @Floats(from=ValidatorFrom::GET, name="id", min=5.1, max=5.9, template="{name}-{min}-{max} must")
+     * @return string
+     */
+    public function floatTpl()
+    {
+        return 'floatTpl';
     }
 
 
@@ -123,6 +164,16 @@ class ValidatorController
         $postName = $request->post('name');
 
         return [$getName, $postName, $name];
+    }
+
+    /**
+     * @RequestMapping("enumTpl")
+     * @Enum(from=ValidatorFrom::GET, name="name", values={1,"a",3}, template="{name}-{value} must")
+     * @return string
+     */
+    public function enumTpl()
+    {
+        return 'enumTpl';
     }
 
 }

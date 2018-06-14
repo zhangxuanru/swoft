@@ -1,79 +1,86 @@
 <p align="center">
-    <a href="https://github.com/stelin/swoft" target="_blank">
-        <img src="http://www.stelin.me/assets/img/swoft.png" alt="swoft" />
+    <a href="https://github.com/swoft-cloud/swoft" target="_blank">
+        <img src="http://qiniu.daydaygo.top/swoft-logo.png?imageView2/2/w/300" alt="swoft" />
     </a>
 </p>
 
-[![Latest Version](https://camo.githubusercontent.com/4e24aee529ac200ee919e43527297e321f807f77/68747470733a2f2f706f7365722e707567782e6f72672f78636c333732312f646f72612d7270632f762f756e737461626c65)](https://packagist.org/packages/swoft/swoft)
-[![Php Version](https://img.shields.io/badge/php-%3E=7.0-brightgreen.svg?maxAge=2592000)](https://packagist.org/packages/swoft/swoft)
-[![Swoole Version](https://img.shields.io/badge/swoole-%3E=2.0.9-brightgreen.svg?maxAge=2592000)](https://packagist.org/packages/swoft/swoft)
-[![Hiredis Version](https://img.shields.io/badge/hiredis-%3E=0.1-brightgreen.svg?maxAge=2592000)](https://packagist.org/packages/swoft/swoft)
+[![Latest Version](https://img.shields.io/badge/beta-v1.0.0-green.svg?maxAge=2592000)](https://github.com/swoft-cloud/swoft/releases)
+[![Build Status](https://travis-ci.org/swoft-cloud/swoft.svg?branch=master)](https://travis-ci.org/swoft-cloud/swoft)
+[![Php Version](https://img.shields.io/badge/php-%3E=7.0-brightgreen.svg?maxAge=2592000)](https://secure.php.net/)
+[![Swoole Version](https://img.shields.io/badge/swoole-%3E=2.1.3-brightgreen.svg?maxAge=2592000)](https://github.com/swoole/swoole-src)
+[![Hiredis Version](https://img.shields.io/badge/hiredis-%3E=0.1-brightgreen.svg?maxAge=2592000)](https://github.com/redis/hiredis)
 [![Swoft Doc](https://img.shields.io/badge/docs-passing-green.svg?maxAge=2592000)](https://doc.swoft.org)
-[![Swoft License](https://img.shields.io/badge/license-apache%202.0-lightgrey.svg?maxAge=2592000)](https://github.com/swoft-cloud/swoft/blob/master/LICENSE)
+[![Swoft License](https://img.shields.io/hexpm/l/plug.svg?maxAge=2592000)](https://github.com/swoft-cloud/swoft/blob/master/LICENSE)
 
-# 简介
-基于 Swoole 原生协程，新时代PHP高性能协程框架，内置 HTTP 服务器，框架全协程实现，性能大大优于传统的 PHP-FPM 模式。
+**[中文说明](README_CN.md)**
 
-- 基于 Swoole 扩展
-- 内置 HTTP 协程服务器
-- MVC 分层设计
-- 高性能路由
-- 全局容器注入
-- 灵活的中间件
-- 高性能 RPC
-- 别名机制
-- 事件机制
-- 国际化(i18n)
-- 参数验证器
-- RESTful支持
-- 服务治理熔断、降级、负载、注册与发现
-- 连接池 Mysql、Redis、RPC
-- 数据库 ORM
-- 协程、异步任务投递
-- 自定义用户进程
-- RPC、Redis、HTTP、Mysql 协程和同步阻塞客户端无缝切换
-- Inotify 自动 Reload
-- 强大的日志系统
+## Introduction
 
-# 系统架构
+The first high-performance PHP coroutine full-stack componentization framework based on Swoole native coroutine, built-in coroutine web server and commonly-used coroutine client, resident memory, which has no dependency on PHP-FPM, asynchronous non-blocking IO implementation, similar to synchronous client style of writing to achieve the use of asynchronous clients, without complex asynchronous callback, no tedious yield, similar  Go language coroutines, flexible annotations framework, a powerful global dependency injection container base on annotations, and great service governance , flexible and powerful AOP, PSR specification implementation, etc., could be used to build high-performance Web systems, APIs, middleware, basic services, microservice and so on.
 
-<p align="center">
-    <a href="https://github.com/stelin/swoft" target="_blank">
-        <img src="https://github.com/swoft-cloud/swoft-doc/blob/master/assets/images/architecture.png" alt="swoft" />
-    </a>
-</p>
+- Base on Swoole extension
+- Built-in HTTP, TCP, WebSocket Server
+- Poweful AOP (Aspect Oriented Programming)
+- Flexible and comprehensive annotations framework
+- Global dependency injection container
+- PSR-7 based HTTP message implementation
+- PSR-14 based event manager
+- PSR-15 based middleware
+- PSR-16 based cache design
+- Scalable high performance RPC
+- Great service governance, fallback, load balance, service registration and discovery
+- Database ORM
+- Universal connection pool
+- Mysql, Redis, RPC, HTTP Coroutine Clients
+- Coroutine driver client and blocking driver client seamlessly switch automatically
+- Coroutine and asynchronous task delivery
+- Custom user process
+- RESTful support
+- Internationalization (i18n) support
+- High performance router
+- Fast and flexible parameter validator
+- Alias mechanism
+- Powerful log component
+- Cross-platform application auto-reload
 
-# 文档
-[**中文文档**](https://doc.swoft.org)
 
-QQ交流群:548173319
+## Document
 
-# 环境要求
+[**Chinese Document**](https://doc.swoft.org)  
+[**English Document**](https://doc.swoft.org) Not yet, please help us write it.
 
-1. PHP 7.X
-2. [Swoole 2.x](https://github.com/swoole/swoole-src/releases), 需开启协程和异步Redis
+QQ Group: 548173319/778656850
+
+## Environmental Requirements
+
+1. PHP 7.0 +
+2. [Swoole 2.1.3](https://github.com/swoole/swoole-src/releases) +, *coroutine* and *async redis client* options are required
 3. [Hiredis](https://github.com/redis/hiredis/releases)
 4. [Composer](https://getcomposer.org/)
-5. [Inotify](https://pecl.php.net/package/inotify) (可选)
 
-# 安装
+## Install
 
-## 手动安装
+### Manual Installation
 
-* Clone 项目
-* 安装依赖 `composer install`
+* Clone project
+* Install requires `composer install`
 
-## Composer 安装
+### Install by Composer
 
-* `composer create-project swoft/swoft swoft dev-master`
+* `composer create-project swoft/swoft swoft`
 
-## Docker 安装
+### Install by Docker
 
 * `docker run -p 80:80 swoft/swoft`
 
-# 配置
+### Install by Docker-Compose
 
-复制项目根目录的 `.env.example` 并命名为 `.env`
+* `cd swoft`
+* `docker-compose up`
+
+## Configuration
+
+If automatically copied `.env` file fails when `composer install` was executed, the `.env.example` that in root directory can be manually copied and named `.env`. Note that `composer update` will not trigger related copy operations.
 
 ```
 # Server
@@ -86,6 +93,9 @@ AUTO_RELOAD=true
 # HTTP
 HTTP_HOST=0.0.0.0
 HTTP_PORT=80
+
+# WebSocket
+WS_ENABLE_HTTP=true
 
 # TCP
 TCP_HOST=0.0.0.0
@@ -106,12 +116,12 @@ LOG_FILE=@runtime/swoole.log
 TASK_WORKER_NUM=1
 ```
 
-## 启动
+## Management
 
-**帮助命令**
+### Help command
 
-```
-[root@swoft bin]# php swoft -h
+```text
+[root@swoft]# php bin/swoft -h
  ____                __ _
 / ___|_      _____  / _| |_
 \___ \ \ /\ / / _ \| |_| __|
@@ -119,81 +129,85 @@ TASK_WORKER_NUM=1
 |____/ \_/\_/ \___/|_|  \__|
 
 Usage:
-  php swoft -h
+  php bin/swoft {command} [arguments ...] [options ...]
 
 Commands:
-  entity  the group command list of database entity
-  rpc     the group command list of rpc server
-  server  the group command list of http-server
+  entity  The group command list of database entity
+  gen     Generate some common application template classes
+  rpc     The group command list of rpc server
+  server  The group command list of http-server
+  ws      There some commands for manage the webSocket server
 
 Options:
-  -v,--version  show version
-  -h,--help     show help
+  -v, --version  show version
+  -h, --help     show help
 ```
 
-**HTTP启动**
+### Start HTTP Server
 
-> 是否同时启动RPC服务器取决于.env文件配置
-
-```php
-// 启动服务，根据 .env 配置决定是否是守护进程
+```bash
+// Start HTTP Server
 php bin/swoft start
 
-// 守护进程启动，覆盖 .env 守护进程(DAEMONIZE)的配置
+// Start Daemonize HTTP Server
 php bin/swoft start -d
 
-// 重启
+// Restart HTTP server
 php bin/swoft restart
 
-// 重新加载
+// Reload HTTP server
 php bin/swoft reload
 
-// 关闭服务
+// Stop HTTP server
 php bin/swoft stop
-
 ```
 
+### Start WebSocket Server
 
-**RPC启动**
+Start WebSocket Server, optional whether to support HTTP processing.
 
-> 启动独立的RPC服务器
+```bash
+// Star WebSocket Server
+php bin/swoft ws:start
 
-```php
-// 启动服务，根据 .env 配置决定是否是守护进程
+// Start Daemonize WebSocket Server
+php bin/swoft ws:start -d
+
+// Restart WebSocket server
+php bin/swoft ws:restart
+
+// Reload WebSocket server
+php bin/swoft ws:reload
+
+// Stop WebSocket server
+php bin/swoft ws:stop
+```
+
+### Start RPC Server
+
+Start an independent RPC Server.
+
+```bash
+// Start RPC Server
 php bin/swoft rpc:start
 
-// 守护进程启动，覆盖 .env 守护进程(DAEMONIZE)的配置
+// Start Daemonize RPC Server
 php bin/swoft rpc:start -d
 
-// 重启
+// Restart RPC Server
 php bin/swoft rpc:restart
 
-// 重新加载
+// Reload RPC Server
 php bin/swoft rpc:reload
 
-// 关闭服务
+// Stop RPC Server
 php bin/swoft rpc:stop
-
 ```
 
-# 更新日志
+## Changelog
 
-[更新日志](changelog.md)
+[Changelog](changelog.md)
 
-# 开发成员
+## License
 
-- [stelin](https://github.com/stelin) (swoft@qq.com)
-- [inhere](https://github.com/inhere) (in.798@qq.com)
-- [ccinn](https://github.com/whiteCcinn) (471113744@qq.com)
-- [esion](https://github.com/esion1) (esionwong@126.com)
-- [huangzhhui](https://github.com/huangzhhui) (huangzhwork@gmail.com)
-
-# 协议
-Swoft的开源协议为Apache-2.0，详情参见[LICENSE](LICENSE)。
-
-
-
-
-
-
-
+Swoft is an open-source software licensed under the [LICENSE](LICENSE)
